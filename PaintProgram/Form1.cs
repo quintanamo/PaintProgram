@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +27,7 @@ namespace PaintProgram
             g = Canvas.CreateGraphics();
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
         }
-        
+
         // When the mouse is clicked, set the ability to draw to true and draw a circle based on mouse position
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
@@ -36,7 +36,7 @@ namespace PaintProgram
             mouseY = e.Y;
             Circle circle = new Circle(mouseX, mouseY, size, color);
             SolidBrush brush = new SolidBrush(color);
-            g.FillEllipse(brush, mouseX - (size/2), mouseY - (size/2), size, size);
+            g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
         }
 
         // When the mouse click is lifted, set the ability to draw to false so shapes aren't being painted 100% of the time
@@ -57,12 +57,13 @@ namespace PaintProgram
                 g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
             }
         }
-        
+
         // Set the size of the brush based on the trackbar
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             size = trackBar1.Value * 2;
             Console.WriteLine("Set size to {0}", size);
+            BrushSizeLabel.Text = Convert.ToString(size);
         }
 
         // set all of the colors.  Last color can be customized.
