@@ -111,7 +111,7 @@ namespace PaintProgram
             color = Color.Violet;
             Console.WriteLine("Color changed to Violet");
         }
-
+        // opens the Color Dialog, sets the color of the box to the color selected which in turn sets the brush color
         private void CustomColor_MouseClick(object sender, MouseEventArgs e)
         {
             ColorDialog.ShowDialog();
