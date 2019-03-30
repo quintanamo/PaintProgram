@@ -25,8 +25,10 @@ namespace PaintProgram
         {
             InitializeComponent();
             g = Canvas.CreateGraphics();
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
         }
         
+        // When the mouse is clicked, set the ability to draw to true and draw a circle based on mouse position
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             canDraw = true;
@@ -37,30 +39,33 @@ namespace PaintProgram
             g.FillEllipse(brush, mouseX - (size/2), mouseY - (size/2), size, size);
         }
 
+        // When the mouse click is lifted, set the ability to draw to false so shapes aren't being painted 100% of the time
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             canDraw = false;
         }
 
+        // If the ability to draw is true (mouse is down) continue drawing shapes as the mouse moves
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
             mouseY = e.Y;
+            Circle circle = new Circle(mouseX, mouseY, size, color);
             if (canDraw)
             {
-                Circle circle = new Circle(mouseX, mouseY, size, color);
                 SolidBrush brush = new SolidBrush(color);
                 g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
             }
         }
         
-
+        // Set the size of the brush based on the trackbar
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             size = trackBar1.Value * 2;
             Console.WriteLine("Set size to {0}", size);
         }
 
+        // set all of the colors.  Last color can be customized.
         private void Black_MouseClick(object sender, MouseEventArgs e)
         {
             color = Color.Black;
@@ -107,6 +112,15 @@ namespace PaintProgram
             Console.WriteLine("Color changed to Violet");
         }
 
+        private void CustomColor_MouseClick(object sender, MouseEventArgs e)
+        {
+            ColorDialog.ShowDialog();
+            CustomColor.BackColor = ColorDialog.Color;
+            color = CustomColor.BackColor;
+            Console.WriteLine("Color changed to Custom Color");
+        }
+
+        // Clear the canvas completely
         private void button1_Click(object sender, EventArgs e)
         {
             Canvas.Refresh();
