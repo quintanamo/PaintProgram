@@ -15,26 +15,26 @@ namespace PaintProgram
     {
         private int size = 2;
         private ArrayList myPts = new ArrayList();
-        private Color color;
+        private Color color = Color.Black;
         private bool canDraw = false;
         private int mouseX;
         private int mouseY;
+        Graphics g;
 
         public Form1()
         {
             InitializeComponent();
+            g = Canvas.CreateGraphics();
         }
         
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             canDraw = true;
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            if (color == null)
-            {
-                color = Color.Black;
-            }
-            myPts.Add(new Circle(e.X, e.Y, size, color));
-            Canvas.Invalidate();
+            mouseX = e.X;
+            mouseY = e.Y;
+            Circle circle = new Circle(mouseX, mouseY, size, color);
+            SolidBrush brush = new SolidBrush(color);
+            g.FillEllipse(brush, mouseX - (size/2), mouseY - (size/2), size, size);
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
@@ -46,26 +46,14 @@ namespace PaintProgram
         {
             mouseX = e.X;
             mouseY = e.Y;
-            Graphics g = Graphics.FromHwnd(this.Handle);
             if (canDraw)
             {
-                if (color == null)
-                {
-                    color = Color.Black;
-                }
-                myPts.Add(new Circle(mouseX, mouseY, size, color));
-                Canvas.Invalidate();
+                Circle circle = new Circle(mouseX, mouseY, size, color);
+                SolidBrush brush = new SolidBrush(color);
+                g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
             }
         }
-
-        private void Canvas_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            foreach(Circle p in myPts)
-            {
-                g.FillEllipse(new SolidBrush(p.getColor()), p.getX() - p.getSize() / 2, p.getY() - p.getSize() / 2, p.getSize(), p.getSize());
-            }
-        }
+        
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -121,8 +109,9 @@ namespace PaintProgram
 
         private void button1_Click(object sender, EventArgs e)
         {
-            myPts.Clear();
+            Canvas.Refresh();
             Canvas.Invalidate();
+            Console.WriteLine("Canvas has been cleared");
         }
     }
 }

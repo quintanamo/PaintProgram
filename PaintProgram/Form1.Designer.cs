@@ -51,7 +51,6 @@
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(560, 400);
             this.Canvas.TabIndex = 0;
-            this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
             this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
@@ -153,7 +152,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(330, 424);
+            this.button1.Location = new System.Drawing.Point(369, 424);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 25);
             this.button1.TabIndex = 12;
