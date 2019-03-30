@@ -43,6 +43,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.CustomColor = new System.Windows.Forms.Panel();
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
+            this.BrushSizeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,9 +155,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(369, 424);
+            this.button1.Location = new System.Drawing.Point(345, 424);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 25);
+            this.button1.Size = new System.Drawing.Size(78, 25);
             this.button1.TabIndex = 12;
             this.button1.Text = "Clear Canvas";
             this.button1.UseVisualStyleBackColor = true;
@@ -171,11 +172,21 @@
             this.CustomColor.TabIndex = 13;
             this.CustomColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CustomColor_MouseClick);
             // 
+            // BrushSizeLabel
+            // 
+            this.BrushSizeLabel.AutoSize = true;
+            this.BrushSizeLabel.Location = new System.Drawing.Point(449, 430);
+            this.BrushSizeLabel.Name = "BrushSizeLabel";
+            this.BrushSizeLabel.Size = new System.Drawing.Size(13, 13);
+            this.BrushSizeLabel.TabIndex = 14;
+            this.BrushSizeLabel.Text = "2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 461);
+            this.Controls.Add(this.BrushSizeLabel);
             this.Controls.Add(this.CustomColor);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Violet);
@@ -196,6 +207,7 @@
             this.Text = "Paint by Quintin";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -215,6 +227,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel CustomColor;
         private System.Windows.Forms.ColorDialog ColorDialog;
+        private System.Windows.Forms.Label BrushSizeLabel;
     }
 }
 
