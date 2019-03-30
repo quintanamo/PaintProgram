@@ -15,8 +15,11 @@ namespace PaintProgram
     {
         private int size = 2;
         private ArrayList myPts = new ArrayList();
-        Color color;
-        bool canDraw = false;
+        private Color color;
+        private bool canDraw = false;
+        private int mouseX;
+        private int mouseY;
+
         public Form1()
         {
             InitializeComponent();
@@ -41,14 +44,16 @@ namespace PaintProgram
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
+            mouseX = e.X;
+            mouseY = e.Y;
+            Graphics g = Graphics.FromHwnd(this.Handle);
             if (canDraw)
             {
-                Graphics g = Graphics.FromHwnd(this.Handle);
                 if (color == null)
                 {
                     color = Color.Black;
                 }
-                myPts.Add(new Circle(e.X, e.Y, size, color));
+                myPts.Add(new Circle(mouseX, mouseY, size, color));
                 Canvas.Invalidate();
             }
         }
