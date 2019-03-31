@@ -19,17 +19,26 @@ namespace PaintProgram
         private bool canDraw = false;
         private int mouseX;
         private int mouseY;
+        Bitmap bitmap;
         Graphics g;
 
         public Form1()
         {
             InitializeComponent();
+            bitmap = new Bitmap(Canvas.ClientRectangle.Width, Canvas.ClientRectangle.Height);
             g = Canvas.CreateGraphics();
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DoubleBuffered = true;
+        }
+
+        private void Canvas_Paint(object sender, PaintEventArgs e)
+        {
+            DoubleBuffered = true;
+            e.Graphics.DrawImage(bitmap, Point.Empty);
         }
 
         // When the mouse is clicked, set the ability to draw to true and draw a circle based on mouse position
@@ -38,16 +47,23 @@ namespace PaintProgram
             canDraw = true;
             mouseX = e.X;
             mouseY = e.Y;
-            Circle circle = new Circle(mouseX, mouseY, size, color);
-            SolidBrush brush = new SolidBrush(color);
-            g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
-            brush.Dispose();
+            using (Graphics toBitmap = Graphics.FromImage(bitmap))
+            {
+                toBitmap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                Circle circle = new Circle(mouseX, mouseY, size, color);
+                SolidBrush brush = new SolidBrush(color);
+                toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                brush.Dispose();
+            }
+            Canvas.Invalidate();
         }
 
         // When the mouse click is lifted, set the ability to draw to false so shapes aren't being painted 100% of the time
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             canDraw = false;
+            Canvas.Invalidate();
         }
 
         // If the ability to draw is true (mouse is down) continue drawing shapes as the mouse moves
@@ -55,12 +71,18 @@ namespace PaintProgram
         {
             mouseX = e.X;
             mouseY = e.Y;
-            Circle circle = new Circle(mouseX, mouseY, size, color);
             if (canDraw)
             {
-                SolidBrush brush = new SolidBrush(color);
-                g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
-                brush.Dispose();
+                using (Graphics toBitmap = Graphics.FromImage(bitmap))
+                {
+                    toBitmap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    Circle circle = new Circle(mouseX, mouseY, size, color);
+                    SolidBrush brush = new SolidBrush(color);
+                    toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    brush.Dispose();
+                }
+                
             }
         }
 
@@ -130,15 +152,27 @@ namespace PaintProgram
         // Clear the canvas completely
         private void button1_Click(object sender, EventArgs e)
         {
+            bitmap = new Bitmap(Canvas.ClientRectangle.Width, Canvas.ClientRectangle.Height);
             Canvas.Refresh();
             Canvas.Invalidate();
             Console.WriteLine("Canvas has been cleared");
         }
 
-        private void Canvas_Paint(object sender, PaintEventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
-
+            SaveFile.ShowDialog();
+            SaveFile.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif |JPEG Image (.jpeg)|*.jpeg |Png Image (.png)|*.png";
+            String path = SaveFile.FileName;
+            bitmap.Save(path);
+            Console.WriteLine("Saved file to {0}", path);
         }
-        
+
+        private void CanvasColorButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog.ShowDialog();
+            CustomColor.BackColor = ColorDialog.Color;
+            Canvas.BackColor = CustomColor.BackColor;
+            Console.WriteLine("Canvas changed to Custom Color");
+        }
     }
 }

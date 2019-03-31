@@ -45,13 +45,17 @@
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
             this.BrushSizeLabel = new System.Windows.Forms.Label();
             this.SaveFile = new System.Windows.Forms.SaveFileDialog();
+            this.Toolbar = new System.Windows.Forms.ToolStrip();
+            this.SaveButton = new System.Windows.Forms.ToolStripLabel();
+            this.CanvasColorButton = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.Toolbar.SuspendLayout();
             this.SuspendLayout();
             // 
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.Color.White;
-            this.Canvas.Location = new System.Drawing.Point(12, 12);
+            this.Canvas.Location = new System.Drawing.Point(12, 37);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(560, 400);
             this.Canvas.TabIndex = 0;
@@ -63,7 +67,7 @@
             // trackBar1
             // 
             this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(468, 418);
+            this.trackBar1.Location = new System.Drawing.Point(468, 443);
             this.trackBar1.Maximum = 50;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
@@ -77,7 +81,7 @@
             // Black
             // 
             this.Black.BackColor = System.Drawing.Color.Black;
-            this.Black.Location = new System.Drawing.Point(12, 424);
+            this.Black.Location = new System.Drawing.Point(12, 449);
             this.Black.Name = "Black";
             this.Black.Size = new System.Drawing.Size(25, 25);
             this.Black.TabIndex = 3;
@@ -86,7 +90,7 @@
             // White
             // 
             this.White.BackColor = System.Drawing.Color.White;
-            this.White.Location = new System.Drawing.Point(43, 424);
+            this.White.Location = new System.Drawing.Point(43, 449);
             this.White.Name = "White";
             this.White.Size = new System.Drawing.Size(25, 25);
             this.White.TabIndex = 4;
@@ -95,7 +99,7 @@
             // Red
             // 
             this.Red.BackColor = System.Drawing.Color.Red;
-            this.Red.Location = new System.Drawing.Point(74, 424);
+            this.Red.Location = new System.Drawing.Point(74, 449);
             this.Red.Name = "Red";
             this.Red.Size = new System.Drawing.Size(25, 25);
             this.Red.TabIndex = 5;
@@ -104,7 +108,7 @@
             // Orange
             // 
             this.Orange.BackColor = System.Drawing.Color.Orange;
-            this.Orange.Location = new System.Drawing.Point(105, 424);
+            this.Orange.Location = new System.Drawing.Point(105, 449);
             this.Orange.Name = "Orange";
             this.Orange.Size = new System.Drawing.Size(25, 25);
             this.Orange.TabIndex = 6;
@@ -113,7 +117,7 @@
             // Yellow
             // 
             this.Yellow.BackColor = System.Drawing.Color.Yellow;
-            this.Yellow.Location = new System.Drawing.Point(136, 424);
+            this.Yellow.Location = new System.Drawing.Point(136, 449);
             this.Yellow.Name = "Yellow";
             this.Yellow.Size = new System.Drawing.Size(25, 25);
             this.Yellow.TabIndex = 7;
@@ -122,7 +126,7 @@
             // Green
             // 
             this.Green.BackColor = System.Drawing.Color.Green;
-            this.Green.Location = new System.Drawing.Point(167, 424);
+            this.Green.Location = new System.Drawing.Point(167, 449);
             this.Green.Name = "Green";
             this.Green.Size = new System.Drawing.Size(25, 25);
             this.Green.TabIndex = 8;
@@ -131,7 +135,7 @@
             // Blue
             // 
             this.Blue.BackColor = System.Drawing.Color.Blue;
-            this.Blue.Location = new System.Drawing.Point(198, 424);
+            this.Blue.Location = new System.Drawing.Point(198, 449);
             this.Blue.Name = "Blue";
             this.Blue.Size = new System.Drawing.Size(25, 25);
             this.Blue.TabIndex = 9;
@@ -140,7 +144,7 @@
             // Indigo
             // 
             this.Indigo.BackColor = System.Drawing.Color.Indigo;
-            this.Indigo.Location = new System.Drawing.Point(229, 424);
+            this.Indigo.Location = new System.Drawing.Point(229, 449);
             this.Indigo.Name = "Indigo";
             this.Indigo.Size = new System.Drawing.Size(25, 25);
             this.Indigo.TabIndex = 10;
@@ -149,7 +153,7 @@
             // Violet
             // 
             this.Violet.BackColor = System.Drawing.Color.Violet;
-            this.Violet.Location = new System.Drawing.Point(260, 424);
+            this.Violet.Location = new System.Drawing.Point(260, 449);
             this.Violet.Name = "Violet";
             this.Violet.Size = new System.Drawing.Size(25, 25);
             this.Violet.TabIndex = 11;
@@ -157,7 +161,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(322, 424);
+            this.button1.Location = new System.Drawing.Point(343, 449);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(78, 25);
             this.button1.TabIndex = 12;
@@ -168,7 +172,7 @@
             // CustomColor
             // 
             this.CustomColor.BackColor = System.Drawing.Color.White;
-            this.CustomColor.Location = new System.Drawing.Point(291, 424);
+            this.CustomColor.Location = new System.Drawing.Point(291, 449);
             this.CustomColor.Name = "CustomColor";
             this.CustomColor.Size = new System.Drawing.Size(25, 25);
             this.CustomColor.TabIndex = 13;
@@ -177,17 +181,42 @@
             // BrushSizeLabel
             // 
             this.BrushSizeLabel.AutoSize = true;
-            this.BrushSizeLabel.Location = new System.Drawing.Point(449, 430);
+            this.BrushSizeLabel.Location = new System.Drawing.Point(449, 455);
             this.BrushSizeLabel.Name = "BrushSizeLabel";
             this.BrushSizeLabel.Size = new System.Drawing.Size(13, 13);
             this.BrushSizeLabel.TabIndex = 14;
             this.BrushSizeLabel.Text = "2";
             // 
+            // Toolbar
+            // 
+            this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveButton,
+            this.CanvasColorButton});
+            this.Toolbar.Location = new System.Drawing.Point(0, 0);
+            this.Toolbar.Name = "Toolbar";
+            this.Toolbar.Size = new System.Drawing.Size(584, 25);
+            this.Toolbar.TabIndex = 15;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(31, 22);
+            this.SaveButton.Text = "Save";
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // CanvasColorButton
+            // 
+            this.CanvasColorButton.Name = "CanvasColorButton";
+            this.CanvasColorButton.Size = new System.Drawing.Size(96, 22);
+            this.CanvasColorButton.Text = "Set Canvas Color";
+            this.CanvasColorButton.Click += new System.EventHandler(this.CanvasColorButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 461);
+            this.ClientSize = new System.Drawing.Size(584, 486);
+            this.Controls.Add(this.Toolbar);
             this.Controls.Add(this.BrushSizeLabel);
             this.Controls.Add(this.CustomColor);
             this.Controls.Add(this.button1);
@@ -203,12 +232,14 @@
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.Canvas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(600, 500);
-            this.MinimumSize = new System.Drawing.Size(600, 500);
+            this.MaximumSize = new System.Drawing.Size(600, 525);
+            this.MinimumSize = new System.Drawing.Size(600, 525);
             this.Name = "Form1";
             this.Text = "Paint by Quintin";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.Toolbar.ResumeLayout(false);
+            this.Toolbar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +263,9 @@
         private System.Windows.Forms.ColorDialog ColorDialog;
         private System.Windows.Forms.Label BrushSizeLabel;
         private System.Windows.Forms.SaveFileDialog SaveFile;
+        private System.Windows.Forms.ToolStrip Toolbar;
+        private System.Windows.Forms.ToolStripLabel SaveButton;
+        private System.Windows.Forms.ToolStripLabel CanvasColorButton;
     }
 }
 
