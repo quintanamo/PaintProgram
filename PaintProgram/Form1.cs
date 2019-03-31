@@ -28,6 +28,10 @@ namespace PaintProgram
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+
         // When the mouse is clicked, set the ability to draw to true and draw a circle based on mouse position
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
@@ -37,6 +41,7 @@ namespace PaintProgram
             Circle circle = new Circle(mouseX, mouseY, size, color);
             SolidBrush brush = new SolidBrush(color);
             g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+            brush.Dispose();
         }
 
         // When the mouse click is lifted, set the ability to draw to false so shapes aren't being painted 100% of the time
@@ -55,6 +60,7 @@ namespace PaintProgram
             {
                 SolidBrush brush = new SolidBrush(color);
                 g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                brush.Dispose();
             }
         }
 
@@ -128,5 +134,11 @@ namespace PaintProgram
             Canvas.Invalidate();
             Console.WriteLine("Canvas has been cleared");
         }
+
+        private void Canvas_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        
     }
 }

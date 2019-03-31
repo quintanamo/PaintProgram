@@ -44,6 +44,7 @@
             this.CustomColor = new System.Windows.Forms.Panel();
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
             this.BrushSizeLabel = new System.Windows.Forms.Label();
+            this.SaveFile = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,6 +55,7 @@
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(560, 400);
             this.Canvas.TabIndex = 0;
+            this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
             this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
@@ -155,7 +157,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(345, 424);
+            this.button1.Location = new System.Drawing.Point(322, 424);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(78, 25);
             this.button1.TabIndex = 12;
@@ -205,6 +207,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "Form1";
             this.Text = "Paint by Quintin";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -228,6 +231,7 @@
         private System.Windows.Forms.Panel CustomColor;
         private System.Windows.Forms.ColorDialog ColorDialog;
         private System.Windows.Forms.Label BrushSizeLabel;
+        private System.Windows.Forms.SaveFileDialog SaveFile;
     }
 }
 
