@@ -161,10 +161,13 @@ namespace PaintProgram
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveFile.ShowDialog();
-            SaveFile.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif |JPEG Image (.jpeg)|*.jpeg |Png Image (.png)|*.png";
             String path = SaveFile.FileName;
-            bitmap.Save(path);
-            Console.WriteLine("Saved file to {0}", path);
+            if (path != null)
+            {
+                bitmap.Save(path);
+                Console.WriteLine("Saved file to {0}", path);
+            }
+            
         }
 
         private void CanvasColorButton_Click(object sender, EventArgs e)

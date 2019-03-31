@@ -187,6 +187,11 @@
             this.BrushSizeLabel.TabIndex = 14;
             this.BrushSizeLabel.Text = "2";
             // 
+            // SaveFile
+            // 
+            this.SaveFile.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif |JPEG Image (.jpeg)|*.jpeg |Png " +
+    "Image (.png)|*.png";
+            // 
             // Toolbar
             // 
             this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
