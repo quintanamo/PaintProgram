@@ -9,18 +9,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace PaintProgram
 {
     public partial class Form1 : Form
     {
         private int size = 2;
-        private ArrayList myPts = new ArrayList();
         private Color color = Color.Black;
         private bool canDraw = false;
         private int mouseX;
         private int mouseY;
+        List<Bitmap> undoList = new List<Bitmap>();
         Bitmap bitmap;
         Graphics g;
+        String brushType = "circle";
 
         public Form1()
         {
@@ -50,19 +52,26 @@ namespace PaintProgram
             using (Graphics toBitmap = Graphics.FromImage(bitmap))
             {
                 toBitmap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                Circle circle = new Circle(mouseX, mouseY, size, color);
+                Shape circle = new Shape(mouseX, mouseY, size, color);
                 SolidBrush brush = new SolidBrush(color);
-                toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
-                g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                if(brushType == "circle")
+                {
+                    toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                } else if(brushType == "square")
+                {
+                    toBitmap.FillRectangle(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    g.FillRectangle(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                }
                 brush.Dispose();
             }
-            Canvas.Invalidate();
         }
 
         // When the mouse click is lifted, set the ability to draw to false so shapes aren't being painted 100% of the time
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             canDraw = false;
+            undoList.Add(new Bitmap(bitmap));
             Canvas.Invalidate();
         }
 
@@ -76,13 +85,20 @@ namespace PaintProgram
                 using (Graphics toBitmap = Graphics.FromImage(bitmap))
                 {
                     toBitmap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    Circle circle = new Circle(mouseX, mouseY, size, color);
+                    Shape circle = new Shape(mouseX, mouseY, size, color);
                     SolidBrush brush = new SolidBrush(color);
-                    toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
-                    g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    if (brushType == "circle")
+                    {
+                        toBitmap.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                        g.FillEllipse(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    }
+                    else if (brushType == "square")
+                    {
+                        toBitmap.FillRectangle(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                        g.FillRectangle(brush, mouseX - (size / 2), mouseY - (size / 2), size, size);
+                    }
                     brush.Dispose();
                 }
-                
             }
         }
 
@@ -141,18 +157,12 @@ namespace PaintProgram
             Console.WriteLine("Color changed to Violet");
         }
         // opens the Color Dialog, sets the color of the box to the color selected which in turn sets the brush color
-        private void CustomColor_MouseClick(object sender, MouseEventArgs e)
-        {
-            ColorDialog.ShowDialog();
-            CustomColor.BackColor = ColorDialog.Color;
-            color = CustomColor.BackColor;
-            Console.WriteLine("Color changed to Custom Color");
-        }
 
         // Clear the canvas completely
-        private void button1_Click(object sender, EventArgs e)
+        private void clearButton_Click(object sender, EventArgs e)
         {
             bitmap = new Bitmap(Canvas.ClientRectangle.Width, Canvas.ClientRectangle.Height);
+            undoList.Add(new Bitmap(bitmap));
             Canvas.Refresh();
             Canvas.Invalidate();
             Console.WriteLine("Canvas has been cleared");
@@ -164,6 +174,7 @@ namespace PaintProgram
             String path = SaveFile.FileName;
             if (path != null)
             {
+                
                 bitmap.Save(path);
                 Console.WriteLine("Saved file to {0}", path);
             }
@@ -173,8 +184,43 @@ namespace PaintProgram
         private void CanvasColorButton_Click(object sender, EventArgs e)
         {
             ColorDialog.ShowDialog();
-            CustomColor.BackColor = ColorDialog.Color;
-            Canvas.BackColor = CustomColor.BackColor;
+            Canvas.BackColor = ColorDialog.Color;
+            Console.WriteLine("Canvas changed to Custom Color");
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            if (undoList.Count() > 0)
+            {
+                int lastIndex = undoList.Count() - 1;
+                undoList.RemoveAt(lastIndex);
+                if(undoList.Count > 0)
+                {
+                    bitmap = undoList.ElementAt(undoList.Count() - 1);
+                } else
+                {
+                    bitmap = new Bitmap(Canvas.ClientRectangle.Width, Canvas.ClientRectangle.Height);
+                }
+            }
+            Canvas.Invalidate();
+        }
+
+        private void setBrushSquare_Click(object sender, EventArgs e)
+        {
+            brushType = "square";
+            Console.WriteLine("Brush shape changed to square.");
+        }
+
+        private void setBrushCircle_Click(object sender, EventArgs e)
+        {
+            brushType = "circle";
+            Console.WriteLine("Brush shape changed to circle.");
+        }
+
+        private void brushColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog.ShowDialog();
+            color = ColorDialog.Color;
             Console.WriteLine("Canvas changed to Custom Color");
         }
     }
