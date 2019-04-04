@@ -50,7 +50,11 @@ namespace PaintProgram
             mouseX = e.X;
             mouseY = e.Y;
             using (Graphics toBitmap = Graphics.FromImage(bitmap))
-            {
+            {  
+                if(undoList.Count() == 0)
+                {
+                    toBitmap.FillRectangle(new SolidBrush(Canvas.BackColor), 0, 0, Canvas.Width, Canvas.Height);
+                }
                 toBitmap.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 Shape circle = new Shape(mouseX, mouseY, size, color);
                 SolidBrush brush = new SolidBrush(color);
@@ -156,7 +160,6 @@ namespace PaintProgram
             color = Color.Violet;
             Console.WriteLine("Color changed to Violet");
         }
-        // opens the Color Dialog, sets the color of the box to the color selected which in turn sets the brush color
 
         // Clear the canvas completely
         private void clearButton_Click(object sender, EventArgs e)
@@ -183,9 +186,18 @@ namespace PaintProgram
 
         private void CanvasColorButton_Click(object sender, EventArgs e)
         {
-            ColorDialog.ShowDialog();
-            Canvas.BackColor = ColorDialog.Color;
-            Console.WriteLine("Canvas changed to Custom Color");
+            var confirm = MessageBox.Show("Changing the canvas color will clear it!  Would you like to proceed?", "Warning!", MessageBoxButtons.OKCancel);
+            if(confirm == DialogResult.OK)
+            {
+                Canvas.Refresh();
+                undoList.Clear();
+                ColorDialog.ShowDialog();
+                Canvas.BackColor = ColorDialog.Color;
+                Console.WriteLine("Canvas changed to Custom Color");
+                bitmap = new Bitmap(Canvas.ClientRectangle.Width, Canvas.ClientRectangle.Height);
+                Canvas.Invalidate();
+                Console.WriteLine("{0}", undoList.Count());
+            }
         }
 
         private void undoButton_Click(object sender, EventArgs e)
